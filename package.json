@@ -1,0 +1,30 @@
+{
+  "name": "dongyuan-blog",
+  "version": "1.0.0",
+  "description": "A beautiful Apple-style personal blog website",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "serve": "npx serve .",
+    "dev": "python -m http.server 8000"
+  },
+  "keywords": [
+    "blog",
+    "personal",
+    "website",
+    "html",
+    "css",
+    "javascript",
+    "apple-style",
+    "responsive"
+  ],
+  "author": "Dongyuan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/dongyuan-blog.git"
+  },
+  "homepage": "https://dongyuan.space",
+  "devDependencies": {},
+  "dependencies": {}
+} 

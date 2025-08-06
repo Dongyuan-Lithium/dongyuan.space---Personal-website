@@ -1,0 +1,9 @@
+# Web Development Tools
+# Note: This is a simple HTML/CSS/JS website that doesn't require Python dependencies
+# However, if you want to add a backend later, you can add Python packages here
+
+# Example packages you might want to add later:
+# flask==2.3.3
+# fastapi==0.104.1
+# uvicorn==0.24.0
+# python-dotenv==1.0.0 
