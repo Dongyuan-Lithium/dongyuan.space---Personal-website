@@ -5,8 +5,7 @@
   "main": "index.html",
   "scripts": {
     "start": "python -m http.server 8000",
-    "serve": "npx serve .",
-    "dev": "python -m http.server 8000"
+    "serve": "npx serve ."
   },
   "keywords": [
     "blog",
@@ -24,7 +23,5 @@
     "type": "git",
     "url": "https://github.com/yourusername/dongyuan-blog.git"
   },
-  "homepage": "https://dongyuan.space",
-  "devDependencies": {},
-  "dependencies": {}
+  "homepage": "https://dongyuan.space"
 } 
