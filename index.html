@@ -3,644 +3,927 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dongyuan - Personal Blog</title>
+    <title>Dongyuan — A Quiet Place for Code and Life</title>
+    <meta name="description" content="A calm personal website for writing about technology, life, and thoughtful making.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Noto+Serif+JP:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --paper: #f6f1ea;
+            --paper-deep: #efe7dc;
+            --paper-soft: rgba(255, 252, 248, 0.72);
+            --ink: #1f1b18;
+            --ink-soft: #544d48;
+            --moss: #7b8b7a;
+            --moss-deep: #5f6e5f;
+            --sakura: #d7b7b0;
+            --indigo-ash: #6b7487;
+            --gold-sand: #b89b72;
+            --line: rgba(31, 27, 24, 0.12);
+            --line-strong: rgba(31, 27, 24, 0.2);
+            --shadow: 0 18px 50px rgba(47, 40, 33, 0.06);
+            --shadow-soft: 0 10px 25px rgba(47, 40, 33, 0.04);
+            --radius-lg: 28px;
+            --radius-md: 20px;
+            --radius-sm: 14px;
+            --content-width: 1120px;
+            --reading-width: 680px;
+            --transition: 320ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
-        :root {
-            --primary-color: #667eea;
-            --secondary-color: #764ba2;
-            --accent-color: #8b5cf6;
-            --text-color: #1f2937;
-            --text-secondary: #6b7280;
-            --bg-color: #ffffff;
-            --card-bg: #f9fafb;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --border-radius: 12px;
-            --border-radius-lg: 20px;
-        }
-
-        [data-theme="dark"] {
-            --primary-color: #8b5cf6;
-            --secondary-color: #a855f7;
-            --accent-color: #c084fc;
-            --text-color: #f9fafb;
-            --text-secondary: #d1d5db;
-            --bg-color: #111827;
-            --card-bg: #1f2937;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -1px rgba(0, 0, 0, 0.2);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-color);
-            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
             min-height: 100vh;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 400;
-            letter-spacing: -0.025em;
+            font-family: 'Inter', 'Noto Sans JP', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--ink);
+            background:
+                radial-gradient(circle at top left, rgba(215, 183, 176, 0.22), transparent 28%),
+                radial-gradient(circle at 85% 18%, rgba(123, 139, 122, 0.16), transparent 22%),
+                linear-gradient(180deg, #fbf7f1 0%, var(--paper) 24%, #f4eee6 100%);
+            line-height: 1.7;
+            letter-spacing: -0.01em;
+            overflow-x: hidden;
         }
 
-        .container {
-            max-width: 1200px;
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.05), rgba(255,255,255,0.05)),
+                repeating-linear-gradient(0deg, transparent 0, transparent 3px, rgba(31, 27, 24, 0.015) 4px);
+            opacity: 0.45;
+            mix-blend-mode: multiply;
+            z-index: -2;
+        }
+
+        .page-shell {
+            width: min(calc(100% - 32px), calc(var(--content-width) + 32px));
             margin: 0 auto;
-            padding: 20px;
         }
 
-        header {
-            text-align: center;
-            padding: 80px 0 60px;
-            color: white;
+        .site-nav {
+            position: sticky;
+            top: 18px;
+            z-index: 20;
+            padding-top: 18px;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 14px 20px;
+            border: 1px solid rgba(31, 27, 24, 0.1);
+            border-radius: 999px;
+            background: rgba(251, 248, 242, 0.72);
+            backdrop-filter: blur(18px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .brand {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .brand-title {
+            font-size: 0.96rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .brand-subtitle {
+            font-size: 0.75rem;
+            color: var(--ink-soft);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--ink-soft);
+            font-size: 0.92rem;
+            padding: 8px 14px;
+            border-radius: 999px;
+            transition: color var(--transition), background var(--transition), transform var(--transition);
+        }
+
+        .nav-links a:hover,
+        .nav-links a:focus-visible {
+            color: var(--ink);
+            background: rgba(255,255,255,0.65);
+            outline: none;
+            transform: translateY(-1px);
+        }
+
+        .hero {
             position: relative;
+            padding: 108px 0 78px;
+            display: grid;
+            grid-template-columns: minmax(0, 1.15fr) minmax(320px, 0.85fr);
+            gap: 36px;
+            align-items: end;
+        }
+
+        .hero-copy {
+            max-width: 760px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+            color: var(--ink-soft);
+            font-size: 0.82rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+        }
+
+        .eyebrow::before {
+            content: '';
+            width: 42px;
+            height: 1px;
+            background: var(--line-strong);
         }
 
         h1 {
-            font-size: clamp(3rem, 8vw, 5rem);
-            font-weight: 700;
-            margin-bottom: 24px;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.15);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-            letter-spacing: -0.02em;
-            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', Georgia, serif;
+            font-size: clamp(3.7rem, 7.2vw, 6.4rem);
+            line-height: 0.95;
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            margin-bottom: 22px;
+            max-width: 10ch;
         }
 
-        .subtitle {
-            font-size: clamp(3rem, 3vw, 6rem);
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
-            margin-bottom: 48px;
-            font-weight: 400;
-            letter-spacing: -0.01em;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        .hero-lead {
+            max-width: 640px;
+            font-size: clamp(1.12rem, 2vw, 1.34rem);
+            color: var(--ink-soft);
+            margin-bottom: 30px;
         }
 
-        .nav {
+        .hero-note {
+            max-width: 560px;
+            font-size: 1.03rem;
+            color: var(--ink-soft);
+        }
+
+        .hero-actions {
             display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-top: 34px;
+        }
+
+        .button,
+        .text-link {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            gap: 16px;
-            margin-bottom: 60px;
-            opacity: 0;
-            transform: translateY(30px);
-            animation: fadeInUp 1s cubic-bezier(0.4, 0, 0.2, 1) 0.6s forwards;
-        }
-
-        .nav a {
-            color: white;
+            gap: 10px;
             text-decoration: none;
-            padding: 14px 28px;
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-weight: 500;
+            transition: transform var(--transition), background var(--transition), color var(--transition), border-color var(--transition), box-shadow var(--transition);
+        }
+
+        .button {
+            min-height: 48px;
+            padding: 0 18px;
+            border-radius: 999px;
+            border: 1px solid var(--line-strong);
+            color: var(--ink);
+            background: rgba(255,255,255,0.55);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset;
             font-size: 0.95rem;
-            letter-spacing: 0.025em;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            background: rgba(255, 255, 255, 0.1);
+            font-weight: 500;
         }
 
-        .nav a::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
+        .button.primary {
+            background: var(--moss);
+            color: #fbfaf7;
+            border-color: rgba(95,110,95,0.75);
         }
 
-        .nav a:hover::before {
-            left: 100%;
-        }
-
-        .nav a:hover {
-            background: rgba(255, 255, 255, 0.95);
-            color: var(--primary-color);
+        .button:hover,
+        .button:focus-visible,
+        .text-link:hover,
+        .text-link:focus-visible {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-            border-color: rgba(255, 255, 255, 0.8);
+            outline: none;
         }
 
-        .nav a:active {
-            transform: translateY(0);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        .button.primary:hover,
+        .button.primary:focus-visible {
+            background: var(--moss-deep);
         }
 
-        .content {
-            background: var(--bg-color);
-            border-radius: var(--border-radius-lg);
-            padding: 48px;
-            box-shadow: var(--shadow-lg);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .button.secondary:hover,
+        .button.secondary:focus-visible {
+            background: rgba(255,255,255,0.85);
+        }
+
+        .hero-panel {
             position: relative;
-            overflow: hidden;
-        }
-
-        .content::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
-        }
-
-        .section {
-            margin-bottom: 48px;
-            opacity: 0;
-            transform: translateY(30px);
-        }
-
-        .section.visible {
-            animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
-        }
-
-        .section h2 {
-            font-size: clamp(1.75rem, 4vw, 2.25rem);
-            color: var(--text-color);
-            margin-bottom: 24px;
-            font-weight: 600;
-            letter-spacing: -0.025em;
-            position: relative;
-            padding-bottom: 12px;
-        }
-
-        .section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
-            border-radius: 2px;
-        }
-
-        .section p {
-            font-size: 1.125rem;
-            color: var(--text-secondary);
-            line-height: 1.7;
-            margin-bottom: 16px;
-            font-weight: 400;
-        }
-
-        .features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-
-        .feature-card {
-            background: var(--card-bg);
-            padding: 32px;
-            border-radius: var(--border-radius);
-            text-align: center;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: -1;
-        }
-
-        .feature-card:hover::before {
-            opacity: 0.05;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 3.5rem;
-            margin-bottom: 24px;
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            display: block;
-        }
-
-        .feature-card:hover .feature-icon {
-            transform: scale(1.1) rotate(5deg);
-        }
-
-        .feature-card h3 {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-color);
-            letter-spacing: -0.01em;
-        }
-
-        .feature-card p {
-            color: var(--text-secondary);
-            font-size: 1rem;
-            line-height: 1.6;
-        }
-
-        .blog-posts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 24px;
-            margin-top: 40px;
-        }
-
-        .blog-card {
-            background: var(--card-bg);
             padding: 28px;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary-color);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-            position: relative;
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            background: linear-gradient(180deg, rgba(255,255,255,0.68), rgba(248,242,234,0.82));
+            box-shadow: var(--shadow);
             overflow: hidden;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            min-height: 360px;
         }
 
-        .blog-card::before {
+        .hero-panel::after {
+            content: '';
+            position: absolute;
+            inset: auto -70px -70px auto;
+            width: 220px;
+            height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(123, 139, 122, 0.24), transparent 65%);
+        }
+
+        .panel-label {
+            display: inline-block;
+            margin-bottom: 18px;
+            font-size: 0.77rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+        }
+
+        .panel-japanese {
+            font-family: 'Noto Serif JP', 'Cormorant Garamond', serif;
+            font-size: 1.55rem;
+            line-height: 1.8;
+            margin-bottom: 18px;
+            letter-spacing: 0.08em;
+        }
+
+        .panel-translation {
+            color: var(--ink-soft);
+            max-width: 28ch;
+            margin-bottom: 26px;
+        }
+
+        .panel-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .panel-chip {
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(31, 27, 24, 0.1);
+            background: rgba(255,255,255,0.52);
+        }
+
+        .panel-chip strong {
+            display: block;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 5px;
+        }
+
+        .panel-chip span {
+            font-size: 0.95rem;
+        }
+
+        section {
+            padding: 26px 0 82px;
+        }
+
+        .section-head {
+            display: grid;
+            grid-template-columns: 170px minmax(0, 1fr);
+            gap: 24px;
+            align-items: start;
+            margin-bottom: 28px;
+        }
+
+        .section-label {
+            font-size: 0.78rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            padding-top: 10px;
+        }
+
+        .section-title h2 {
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', Georgia, serif;
+            font-size: clamp(2.4rem, 5vw, 4.2rem);
+            line-height: 0.98;
+            font-weight: 600;
+            letter-spacing: -0.04em;
+            margin-bottom: 14px;
+        }
+
+        .section-title p {
+            max-width: var(--reading-width);
+            color: var(--ink-soft);
+            font-size: 1.04rem;
+        }
+
+        .essay-block {
+            display: grid;
+            grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+            gap: 26px;
+        }
+
+        .paper-card,
+        .writing-card,
+        .theme-card,
+        .about-card,
+        .footer-card {
+            position: relative;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(255,255,255,0.62), rgba(249,243,236,0.92));
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+        }
+
+        .paper-card {
+            padding: 32px;
+            min-height: 100%;
+        }
+
+        .paper-card::before,
+        .writing-card::before,
+        .theme-card::before,
+        .about-card::before,
+        .footer-card::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-            transition: left 0.6s ease;
+            left: 28px;
+            right: 28px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(123, 139, 122, 0.45), transparent);
         }
 
-        .blog-card:hover::before {
-            left: 100%;
-        }
-
-        .blog-card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-lg);
-            border-color: rgba(0, 0, 0, 0.1);
-        }
-
-        .blog-meta {
-            color: var(--text-secondary);
-            font-size: 0.875rem;
-            margin-bottom: 12px;
-            font-weight: 500;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        .blog-title {
-            font-size: 1.25rem;
+        .paper-card h3,
+        .about-card h3 {
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+            font-size: 2rem;
             font-weight: 600;
-            margin-bottom: 12px;
-            color: var(--text-color);
-            line-height: 1.4;
-            letter-spacing: -0.01em;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
         }
 
-        .blog-excerpt {
-            color: var(--text-secondary);
-            line-height: 1.6;
-            font-size: 0.95rem;
+        .paper-card p,
+        .about-card p,
+        .writing-card p,
+        .theme-card p,
+        .footer-card p {
+            color: var(--ink-soft);
         }
 
-        .theme-toggle {
-            position: fixed;
-            bottom: 32px;
-            right: 32px;
-            width: 56px;
-            height: 56px;
+        .vertical-note {
+            display: inline-block;
+            margin-bottom: 14px;
+            font-size: 0.8rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+        }
+
+        .quote-mark {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            line-height: 0.8;
+            color: rgba(123, 139, 122, 0.45);
+            margin-bottom: 8px;
+        }
+
+        .philosophy-list {
+            display: grid;
+            gap: 18px;
+            align-content: start;
+        }
+
+        .mini-note {
+            padding: 22px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--line);
+            background: rgba(255,255,255,0.45);
+        }
+
+        .mini-note strong {
+            display: block;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: var(--ink-soft);
+        }
+
+        .writings-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .writing-card {
+            padding: 26px 24px 24px;
+            min-height: 260px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+
+        .writing-card:hover,
+        .theme-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+            border-color: rgba(31, 27, 24, 0.18);
+        }
+
+        .writing-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 22px;
+            color: var(--ink-soft);
+            font-size: 0.8rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .writing-card h3 {
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+            font-size: 1.9rem;
+            line-height: 1;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 16px;
+        }
+
+        .writing-tag {
+            display: inline-flex;
+            align-items: center;
+            min-height: 30px;
+            padding: 0 10px;
+            border-radius: 999px;
+            background: rgba(123, 139, 122, 0.14);
+            color: var(--moss-deep);
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .writing-link,
+        .footer-link,
+        .inline-link {
+            color: var(--ink);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(31, 27, 24, 0.25);
+            transition: color var(--transition), border-color var(--transition);
+        }
+
+        .writing-link:hover,
+        .footer-link:hover,
+        .inline-link:hover {
+            color: var(--moss-deep);
+            border-color: rgba(95, 110, 95, 0.55);
+        }
+
+        .themes-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .theme-card {
+            padding: 24px;
+            transition: transform var(--transition), box-shadow var(--transition), border-color var(--transition);
+        }
+
+        .theme-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
-            background: var(--bg-color);
-            border: none;
-            box-shadow: var(--shadow-lg);
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 1.25rem;
-            z-index: 1000;
-            border: 1px solid rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--line-strong);
+            margin-bottom: 18px;
+            font-size: 0.9rem;
+            color: var(--ink-soft);
         }
 
-        .theme-toggle:hover {
-            transform: scale(1.1) rotate(180deg);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        .theme-card h3 {
+            font-family: 'Cormorant Garamond', 'Noto Serif JP', serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 10px;
         }
 
-        footer {
-            text-align: center;
-            padding: 48px 0;
-            color: white;
-            opacity: 0.9;
+        .about-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+            gap: 18px;
         }
 
-        footer p {
-            font-size: 0.95rem;
-            font-weight: 400;
+        .about-card {
+            padding: 30px;
         }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .about-card.secondary {
+            background: linear-gradient(180deg, rgba(255,255,255,0.52), rgba(242,236,228,0.92));
         }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-8px); }
+        .about-list {
+            display: grid;
+            gap: 16px;
+            margin-top: 20px;
         }
 
-        .floating {
-            animation: float 4s ease-in-out infinite;
+        .about-list div {
+            padding-top: 16px;
+            border-top: 1px solid rgba(31, 27, 24, 0.08);
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 16px;
-            }
-            
-            header {
-                padding: 60px 0 40px;
-            }
-            
-            .nav {
-                flex-direction: column;
-                align-items: center;
-                gap: 12px;
-            }
-            
-            .nav a {
-                width: 200px;
-                text-align: center;
-            }
-            
-            .content {
-                padding: 32px 24px;
-            }
-            
-            .features, .blog-posts {
+        .about-list strong {
+            display: block;
+            font-size: 0.78rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--ink-soft);
+            margin-bottom: 7px;
+        }
+
+        .footer-wrap {
+            padding-bottom: 40px;
+        }
+
+        .footer-card {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 18px;
+            align-items: center;
+            padding: 24px 28px;
+        }
+
+        .footer-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            color: var(--ink-soft);
+            font-size: 0.92rem;
+        }
+
+        .reveal {
+            opacity: 1;
+            transform: none;
+            transition: transform 400ms ease, box-shadow var(--transition), border-color var(--transition);
+        }
+
+        .reveal.is-visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        .soft-accent {
+            color: var(--moss-deep);
+        }
+
+        @media (max-width: 980px) {
+            .hero,
+            .essay-block,
+            .about-grid,
+            .footer-card,
+            .section-head {
                 grid-template-columns: 1fr;
             }
 
-            .theme-toggle {
-                bottom: 24px;
-                right: 24px;
-                width: 48px;
-                height: 48px;
-                font-size: 1.1rem;
+            .writings-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .themes-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .section-label {
+                padding-top: 0;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .page-shell {
+                width: min(calc(100% - 20px), calc(var(--content-width) + 20px));
+            }
+
+            .site-nav {
+                top: 10px;
+                padding-top: 10px;
+            }
+
+            .nav-inner {
+                border-radius: 24px;
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .hero {
+                padding: 72px 0 56px;
+                gap: 28px;
+            }
+
+            h1 {
+                max-width: 12ch;
+            }
+
+            section {
+                padding: 20px 0 60px;
+            }
+
+            .hero-panel,
+            .paper-card,
+            .about-card,
+            .footer-card,
+            .writing-card,
+            .theme-card {
+                border-radius: 22px;
+            }
+
+            .panel-grid,
+            .themes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .button {
+                width: 100%;
             }
         }
     </style>
 </head>
-<body>
-    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode">
-        🌙
-    </button>
-
-    <div class="container">
-        <header>
-            <h1 class="floating">Dongyuan</h1>
-            <p class="subtitle">Exploring the intersection of technology and human experience</p>
-            <nav class="nav">
-                <a href="#home">Home</a>
-                <a href="#blog">Blog</a>
-                <a href="#about">About</a>
-            </nav>
+<body id="top">
+    <div class="page-shell">
+        <header class="site-nav">
+            <div class="nav-inner">
+                <div class="brand">
+                    <span class="brand-title">Dongyuan</span>
+                    <span class="brand-subtitle">Quiet Notes on Code and Life</span>
+                </div>
+                <nav class="nav-links" aria-label="Primary">
+                    <a href="#philosophy">Philosophy</a>
+                    <a href="#writings">Writings</a>
+                    <a href="#themes">Themes</a>
+                    <a href="#about">About</a>
+                </nav>
+            </div>
         </header>
 
-        <main class="content">
-            <section id="home" class="section">
-                <h2>Welcome to My Blog</h2>
-                <p>I'm a passionate developer and writer who loves exploring how technology shapes our lives. Here you'll find my thoughts on programming, life experiences, and the creative process.</p>
-                
-                <div class="features">
-                    <div class="feature-card" onclick="showFeature('tech')">
-                        <div class="feature-icon">💻</div>
-                        <h3>Tech Insights</h3>
-                        <p>Deep dives into technology, development experiences, and industry trends.</p>
+        <main>
+            <section class="hero">
+                <div class="hero-copy reveal is-visible">
+                    <div class="eyebrow">静かな記録 · A quieter internet</div>
+                    <h1>Thoughts, code, and the shape of a life online.</h1>
+                    <p class="hero-lead">This is a personal space for essays, technical notes, and the slower reflections that usually get lost between deadlines, tabs, and timelines.</p>
+                    <p class="hero-note">The first version of this site is intentionally restrained: warm paper tones, calm typography, and enough empty space for ideas to breathe.</p>
+                    <div class="hero-actions">
+                        <a class="button primary" href="#writings">Read the first notes</a>
+                        <a class="button secondary" href="#about">About this space</a>
                     </div>
-                    <div class="feature-card" onclick="showFeature('life')">
-                        <div class="feature-icon">📖</div>
-                        <h3>Life Thoughts</h3>
-                        <p>Personal reflections, life lessons, and philosophical musings.</p>
+                </div>
+
+                <aside class="hero-panel reveal">
+                    <span class="panel-label">Seasonal note</span>
+                    <p class="panel-japanese">余白のある場所で、
+                        <br>考えはやっと深くなる。</p>
+                    <p class="panel-translation">In a place with room to breathe, thoughts can finally deepen.</p>
+                    <div class="panel-grid">
+                        <div class="panel-chip">
+                            <strong>Tone</strong>
+                            <span>Quiet, literate, restrained</span>
+                        </div>
+                        <div class="panel-chip">
+                            <strong>Palette</strong>
+                            <span>Paper, ink, moss, dust</span>
+                        </div>
+                        <div class="panel-chip">
+                            <strong>Form</strong>
+                            <span>Editorial, airy, tactile</span>
+                        </div>
+                        <div class="panel-chip">
+                            <strong>Direction</strong>
+                            <span>Japanese-inspired minimalism</span>
+                        </div>
                     </div>
-                    <div class="feature-card" onclick="showFeature('creative')">
-                        <div class="feature-icon">🎨</div>
-                        <h3>Creative Expression</h3>
-                        <p>Stories, ideas, and creative projects that inspire and connect.</p>
+                </aside>
+            </section>
+
+            <section id="philosophy">
+                <div class="section-head reveal">
+                    <div class="section-label">01 · Philosophy</div>
+                    <div class="section-title">
+                        <h2>A site that feels more like a journal than a product.</h2>
+                        <p>This redesign moves away from glossy template energy and toward something calmer: an authored space with a paper-like background, a serif-led voice, quiet motion, and a more reflective pace.</p>
+                    </div>
+                </div>
+
+                <div class="essay-block">
+                    <article class="paper-card reveal">
+                        <span class="vertical-note">Design intention</span>
+                        <div class="quote-mark">“</div>
+                        <h3>Make the page feel held together by typography, rhythm, and silence.</h3>
+                        <p>The beauty of this direction comes from restraint. Fewer loud surfaces. Fewer decorative effects. More attention to spacing, texture, wording, and the emotional temperature of the page.</p>
+                        <p style="margin-top: 16px;">This first pass interprets your idea of “Japanese beauty” as editorial calm: warm neutrals, dark ink text, subtle moss green, and a gentle sense of pause.</p>
+                    </article>
+
+                    <div class="philosophy-list reveal">
+                        <div class="mini-note">
+                            <strong>What stays</strong>
+                            Personal writing, technology, life, a human voice.
+                        </div>
+                        <div class="mini-note">
+                            <strong>What changes</strong>
+                            The site stops looking like a generic modern template and starts looking more authored.
+                        </div>
+                        <div class="mini-note">
+                            <strong>What comes next</strong>
+                            A clearer archive, individual essay pages, and a more coherent long-term visual system.
+                        </div>
                     </div>
                 </div>
             </section>
 
-            <section id="blog" class="section">
-                <h2>Latest Blog Posts</h2>
-                <div class="blog-posts">
-                    <article class="blog-card" onclick="showBlogPost('web-dev')">
-                        <div class="blog-meta">Tech • Dec 15, 2024</div>
-                        <h3 class="blog-title">My First Steps in Web Development</h3>
-                        <p class="blog-excerpt">Reflecting on the journey from HTML basics to building modern web applications with React and other frameworks...</p>
+            <section id="writings">
+                <div class="section-head reveal">
+                    <div class="section-label">02 · Writings</div>
+                    <div class="section-title">
+                        <h2>Selected notes for a slower homepage.</h2>
+                        <p>The cards below are still placeholder editorial entries, but now they live inside a visual system that can later support a real archive without changing the soul of the site.</p>
+                    </div>
+                </div>
+
+                <div class="writings-grid">
+                    <article class="writing-card reveal">
+                        <div>
+                            <div class="writing-meta">
+                                <span>Tech · Dec 15, 2024</span>
+                                <span class="writing-tag">Craft</span>
+                            </div>
+                            <h3>My First Steps in Web Development</h3>
+                            <p>Looking back at the early curiosity that turned HTML, CSS, and small experiments into a longer relationship with the web.</p>
+                        </div>
+                        <a class="writing-link" href="#">Read when the archive is ready</a>
                     </article>
-                    <article class="blog-card" onclick="showBlogPost('digital-balance')">
-                        <div class="blog-meta">Life • Dec 10, 2024</div>
-                        <h3 class="blog-title">Finding Balance in the Digital Age</h3>
-                        <p class="blog-excerpt">How I learned to navigate the constant stream of information and stay grounded in an increasingly connected world...</p>
+
+                    <article class="writing-card reveal">
+                        <div>
+                            <div class="writing-meta">
+                                <span>Life · Dec 10, 2024</span>
+                                <span class="writing-tag">Reflection</span>
+                            </div>
+                            <h3>Finding Balance in the Digital Age</h3>
+                            <p>A note on attention, overstimulation, and what it takes to stay inwardly clear while living online.</p>
+                        </div>
+                        <a class="writing-link" href="#">Read when the archive is ready</a>
                     </article>
-                    <article class="blog-card" onclick="showBlogPost('problem-solving')">
-                        <div class="blog-meta">Tech • Dec 5, 2024</div>
-                        <h3 class="blog-title">The Art of Problem Solving in Programming</h3>
-                        <p class="blog-excerpt">Breaking down complex programming challenges and developing a systematic approach to debugging and optimization...</p>
+
+                    <article class="writing-card reveal">
+                        <div>
+                            <div class="writing-meta">
+                                <span>Tech · Dec 5, 2024</span>
+                                <span class="writing-tag">Method</span>
+                            </div>
+                            <h3>The Art of Problem Solving in Programming</h3>
+                            <p>Not just how to debug, but how to think clearly when complexity, ambiguity, and frustration begin to stack.</p>
+                        </div>
+                        <a class="writing-link" href="#">Read when the archive is ready</a>
                     </article>
                 </div>
             </section>
 
-            <section id="about" class="section">
-                <h2>About Me</h2>
-                <p>I started my journey in technology with a simple curiosity about how things work on the web. What began as learning HTML and CSS has evolved into a passion for building meaningful digital experiences.</p>
-                <p>Beyond coding, I'm deeply interested in how technology shapes our lives and relationships. I write about both technical challenges and the human side of technology - the lessons learned, the connections made, and the impact we can have.</p>
-                <p>When I'm not coding or writing, you'll find me exploring new technologies, reading about philosophy and psychology, or simply enjoying a good conversation about the future of our digital world.</p>
+            <section id="themes">
+                <div class="section-head reveal">
+                    <div class="section-label">03 · Themes</div>
+                    <div class="section-title">
+                        <h2>The site should orbit a few clear centers of gravity.</h2>
+                        <p>These are the areas this homepage now gestures toward. They can later become dedicated sections, archives, or essays without breaking the design system.</p>
+                    </div>
+                </div>
+
+                <div class="themes-grid">
+                    <article class="theme-card reveal">
+                        <span class="theme-number">01</span>
+                        <h3>Technology</h3>
+                        <p>Code, systems, interfaces, and the invisible structures that shape daily life.</p>
+                    </article>
+                    <article class="theme-card reveal">
+                        <span class="theme-number">02</span>
+                        <h3>Attention</h3>
+                        <p>How to stay deliberate in a world built to interrupt, accelerate, and fragment thought.</p>
+                    </article>
+                    <article class="theme-card reveal">
+                        <span class="theme-number">03</span>
+                        <h3>Making</h3>
+                        <p>Projects, experiments, and the slow craft of building things that feel coherent.</p>
+                    </article>
+                    <article class="theme-card reveal">
+                        <span class="theme-number">04</span>
+                        <h3>Life</h3>
+                        <p>Private reflections, small observations, and what remains after the noise passes.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section id="about">
+                <div class="section-head reveal">
+                    <div class="section-label">04 · About</div>
+                    <div class="section-title">
+                        <h2>A more personal corner of the internet.</h2>
+                        <p>The current homepage is no longer trying to look universally impressive. It is trying to feel like it belongs to one person with a point of view.</p>
+                    </div>
+                </div>
+
+                <div class="about-grid">
+                    <article class="about-card reveal">
+                        <span class="vertical-note">About me</span>
+                        <h3>Dongyuan</h3>
+                        <p>I’m interested in technology not only as a technical system, but as something that shapes attention, relationships, work, and identity. This site is where technical notes and personal reflections can sit next to each other without apology.</p>
+                        <p style="margin-top: 16px;">The long-term goal is simple: build a site that feels calm enough to read, specific enough to matter, and durable enough to grow over time.</p>
+                    </article>
+
+                    <aside class="about-card secondary reveal">
+                        <span class="vertical-note">Current direction</span>
+                        <div class="about-list">
+                            <div>
+                                <strong>Visual language</strong>
+                                Warm paper tones, editorial serif headlines, thin borders, soft moss accents.
+                            </div>
+                            <div>
+                                <strong>Emotional target</strong>
+                                Quiet, precise, human, and slightly poetic without becoming theatrical.
+                            </div>
+                            <div>
+                                <strong>Next build phase</strong>
+                                Turn this homepage language into a real writing archive and essay page system.
+                            </div>
+                        </div>
+                    </aside>
+                </div>
             </section>
         </main>
 
-        <footer>
-            <p>&copy; 2024 Dongyuan. All rights reserved.</p>
+        <footer class="footer-wrap reveal is-visible">
+            <div class="footer-card">
+                <div>
+                    <p>A calm digital room for <span class="soft-accent">code, reflection, and unfinished thoughts</span>.</p>
+                </div>
+                <div class="footer-meta">
+                    <span id="year"></span>
+                    <a class="footer-link" href="https://github.com/Dongyuan-Lithium/dongyuan.space---Personal-website" target="_blank" rel="noreferrer">GitHub</a>
+                    <a class="footer-link" href="#top">Top</a>
+                </div>
+            </div>
         </footer>
     </div>
 
     <script>
-        // Theme toggle functionality
-        function toggleTheme() {
-            const body = document.body;
-            const themeToggle = document.querySelector('.theme-toggle');
-            
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                themeToggle.innerHTML = '🌙';
-                localStorage.setItem('theme', 'light');
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                themeToggle.innerHTML = '☀️';
-                localStorage.setItem('theme', 'dark');
-            }
-        }
-
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            document.body.setAttribute('data-theme', 'dark');
-            document.querySelector('.theme-toggle').innerHTML = '☀️';
-        }
-
-        // Intersection Observer for scroll animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        // Observe all sections
-        document.querySelectorAll('.section').forEach(section => {
-            observer.observe(section);
-        });
-
-        // Interactive features
-        function showFeature(type) {
-            const messages = {
-                tech: '💻 Tech Insights: Coming soon! I\'ll be sharing my experiences with modern web development, AI, and emerging technologies.',
-                life: '📖 Life Thoughts: Personal reflections on mindfulness, productivity, and finding meaning in our digital age.',
-                creative: '🎨 Creative Expression: Stories and ideas that explore the intersection of technology and human creativity.'
-            };
-            
-            showNotification(messages[type]);
-        }
-
-        function showBlogPost(post) {
-            const posts = {
-                'web-dev': 'My First Steps in Web Development - A journey from HTML basics to modern frameworks like React and Vue.',
-                'digital-balance': 'Finding Balance in the Digital Age - How I learned to navigate information overload and stay grounded.',
-                'problem-solving': 'The Art of Problem Solving in Programming - Systematic approaches to debugging and optimization.'
-            };
-            
-            showNotification(posts[post]);
-        }
-
-        function showNotification(message) {
-            // Create notification element
-            const notification = document.createElement('div');
-            notification.style.cssText = `
-                position: fixed;
-                top: 24px;
-                right: 24px;
-                background: var(--bg-color);
-                color: var(--text-color);
-                padding: 16px 20px;
-                border-radius: 12px;
-                box-shadow: var(--shadow-lg);
-                z-index: 1001;
-                max-width: 320px;
-                transform: translateX(100%);
-                transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-                border-left: 4px solid var(--primary-color);
-                font-size: 0.95rem;
-                line-height: 1.5;
-                border: 1px solid rgba(0, 0, 0, 0.05);
-            `;
-            notification.textContent = message;
-            
-            document.body.appendChild(notification);
-            
-            // Animate in
-            setTimeout(() => {
-                notification.style.transform = 'translateX(0)';
-            }, 100);
-            
-            // Remove after 4 seconds
-            setTimeout(() => {
-                notification.style.transform = 'translateX(100%)';
-                setTimeout(() => {
-                    document.body.removeChild(notification);
-                }, 300);
-            }, 4000);
-        }
-
-        // Add some fun interactive elements
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add click effects to cards
-            document.querySelectorAll('.feature-card, .blog-card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    // Create ripple effect
-                    const ripple = document.createElement('span');
-                    const rect = this.getBoundingClientRect();
-                    const size = Math.max(rect.width, rect.height);
-                    const x = e.clientX - rect.left - size / 2;
-                    const y = e.clientY - rect.top - size / 2;
-                    
-                    ripple.style.cssText = `
-                        position: absolute;
-                        width: ${size}px;
-                        height: ${size}px;
-                        left: ${x}px;
-                        top: ${y}px;
-                        background: rgba(255,255,255,0.3);
-                        border-radius: 50%;
-                        transform: scale(0);
-                        animation: ripple 0.6s linear;
-                        pointer-events: none;
-                    `;
-                    
-                    this.appendChild(ripple);
-                    
-                    setTimeout(() => {
-                        ripple.remove();
-                    }, 600);
-                });
-            });
-        });
-
-        // Add ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
-                }
-            }
-        `;
-        document.head.appendChild(style);
+        document.getElementById('year').textContent = `© ${new Date().getFullYear()} Dongyuan`;
     </script>
 </body>
 </html>
